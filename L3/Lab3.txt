@@ -1,0 +1,140 @@
+	Lab3 CIS 3530  - worth 4%
+
+Submit all queries in a file called lastnameFirstnameL3.sql (e.g. chaturvediRituL3.sql)
+
+Step 1. Connect to linux.socs.uoguelph.ca and Postgres (see tutorial1 for details).
+
+Step 2. Download the following 2 scripts from Courselink and run them on Postgres: 
+(1) movies_schema.sql to create and populate the movie database 
+(2) movies_schema_alter.sql to add primary and foreign keys to the created tables. 
+
+Remember, to run the scripts on Postgres, use \i (e.g. \i movies_schema.sql).
+
+>select * from movie;
+
+ mid |          title          | year |     director     
+-----+-------------------------+------+------------------
+ 101 | Gone with the Wind      | 1939 | Victor Fleming
+ 102 | Star Wars               | 1977 | George Lucas
+ 103 | The Sound of Music      | 1965 | Robert Wise
+ 104 | E.T.                    | 1982 | Steven Spielberg
+ 105 | Titanic                 | 1997 | James Cameron
+ 106 | Snow White              | 1937 | 
+ 107 | Avatar                  | 2009 | James Cameron
+ 108 | Raiders of the Lost Ark | 1981 | Steven Spielberg
+(8 rows)
+
+>select * from reviewer;
+
+ rid |       name       
+-----+------------------
+ 201 | Sarah Martinez
+ 202 | Daniel Lewis
+ 203 | Michael Walsh
+ 204 | Mike Anderson
+ 205 | Chris Jackson
+ 206 | Elizabeth Thomas
+ 207 | John Moore
+ 208 | Ashley White
+(8 rows)
+
+>select * from rating;
+
+ rid | mid | stars | ratingdate 
+-----+-----+-------+------------
+ 201 | 101 |     2 | 2011-01-22
+ 201 | 101 |     4 | 2011-01-27
+ 202 | 106 |     4 | 
+ 202 | 107 |     3 | 2011-10-02
+ 203 | 103 |     2 | 2011-01-20
+ 203 | 108 |     4 | 2011-01-12
+ 203 | 108 |     2 | 2011-01-30
+ 204 | 101 |     3 | 2011-01-09
+ 205 | 101 |     3 | 2011-01-27
+ 205 | 102 |     2 | 2011-01-27
+ 205 | 105 |     4 | 2011-01-27
+ 205 | 106 |     2 | 2011-01-27
+ 205 | 107 |     3 | 2011-01-27
+ 205 | 103 |     3 | 2011-01-27
+ 205 | 104 |     2 | 2011-01-22
+ 205 | 108 |     4 | 
+ 206 | 107 |     3 | 2011-01-15
+ 206 | 106 |     5 | 2011-01-19
+ 207 | 107 |     5 | 2011-01-20
+ 208 | 104 |     3 | 2011-01-02
+(20 rows)
+
+rating(rid) is a foreign key that references table reviewer
+rating(mid) is a foreign key that references table movie
+
+
+Step 3: Write SQL queries to do the following: 
+
+1. List names of reviewers who reviewed all movies reviewed by 'Elizabeth Thomas'.
+
+Expected Result:
+
+       name       
+------------------
+ Daniel Lewis
+ Chris Jackson
+ Elizabeth Thomas
+(3 rows)
+
+2. List all reviewers and the total number of movies reviewed by them 
+(they may review a movie more than once) in descending order of the 
+total number of movies reviewed by them. 
+
+Hint: You may use AS to rename headings. For example, 
+SELECT count (*) AS total FROM Movie;
+
+Expected Result:
+
+        name      | total 
+------------------+-------
+ Chris Jackson    |     8
+ Michael Walsh    |     3
+ Daniel Lewis     |     2
+ Elizabeth Thomas |     2
+ Sarah Martinez   |     2
+ Ashley White     |     1
+ Mike Anderson    |     1
+ John Moore       |     1
+(8 rows)
+
+3. List all movies that have been reviewed by 2 or more reviewers. 
+
+Hint: You may use AS to rename headings. For example, 
+SELECT count (*) AS "Number of Movies" FROM Movie;
+
+Expected Result:
+          title          | Reviewed by 
+-------------------------+-------------
+ Gone with the Wind      |           4
+ Avatar                  |           4
+ Raiders of the Lost Ark |           3
+ Snow White              |           3
+ E.T.                    |           2
+ The Sound of Music      |           2
+(6 rows)
+
+4. Which movies have the highest rating? 
+
+Expected Result:
+   title
+------------
+ Snow White
+ Avatar
+(2 rows)
+
+5. List the oldest movie (in this database) that has been reviewed. 
+
+Expected Result:
+   title
+------------
+ Snow White
+(1 row)
+
+
+ 
+
